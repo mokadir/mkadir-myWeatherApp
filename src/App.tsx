@@ -51,8 +51,8 @@ const WeatherDashboard: React.FC = () => {
                 </svg>
               </motion.div>
               <div>
-                <h1 className="text-white/90 dark:text-white/90 text-white/80 text-base sm:text-xl font-bold tracking-tight">WeatherVault</h1>
-                <p className="text-white/30 dark:text-white/30 text-white/50 text-[10px] sm:text-xs">Premium Weather Intelligence</p>
+                <h1 className="text-white/90 text-base sm:text-xl font-bold tracking-tight">WeatherVault</h1>
+                <p className="text-white/30 text-[10px] sm:text-xs">Premium Weather Intelligence</p>
               </div>
             </div>
 

@@ -40,6 +40,7 @@
 
 /* stylelint-disable at-rule-no-unknown */
 @layer components {
+  /* stylelint-disable at-rule-no-unknown */
   .glass {
     @apply bg-white/10 backdrop-blur-xl border border-white/10 shadow-lg;
   }
@@ -63,6 +64,7 @@
   .glow-purple {
     box-shadow: 0 0 20px rgba(123, 47, 247, 0.3), 0 0 40px rgba(123, 47, 247, 0.1);
   }
+  /* stylelint-enable at-rule-no-unknown */
 }
 
 @layer utilities {
