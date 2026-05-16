@@ -164,7 +164,7 @@ spec:
                 container('tools') {
                     sh '''
                         set -eux
-                        npm ci --omit=optional --ignore-scripts --no-audit --no-fund
+                        npm ci --loglevel=error --omit=optional --ignore-scripts --no-audit --no-fund
                         echo "Dependencies installed successfully"
                     '''
                 }

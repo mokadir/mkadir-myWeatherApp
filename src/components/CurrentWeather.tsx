@@ -41,7 +41,7 @@ const CurrentWeather: React.FC = () => {
       {/* City & Temperature Section */}
       <motion.div variants={itemVariants} className="text-center mb-8">
         <motion.h1
-          className="text-4xl md:text-5xl lg:text-6xl font-bold text-white/90 mb-2 tracking-tight"
+          className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-primary mb-2 tracking-tight px-2"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' as const }}
@@ -49,7 +49,7 @@ const CurrentWeather: React.FC = () => {
           {city}, {country}
         </motion.h1>
         <motion.p
-          className="text-white/40 text-lg font-light"
+          className="text-muted text-sm md:text-lg font-light px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -65,7 +65,7 @@ const CurrentWeather: React.FC = () => {
 
       {/* Main Temperature Display */}
       <motion.div variants={itemVariants} className="flex flex-col items-center mb-8">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6">
           <motion.div
             className="relative"
             whileHover={{ scale: 1.05 }}
@@ -74,14 +74,14 @@ const CurrentWeather: React.FC = () => {
             <img
               src={getWeatherIconUrl(current.icon)}
               alt={current.description}
-              className="w-28 h-28 md:w-36 md:h-36 drop-shadow-2xl"
+              className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 drop-shadow-2xl"
               style={{ filter: 'brightness(1.2) drop-shadow(0 0 20px rgba(255,255,255,0.3))' }}
             />
           </motion.div>
           <div className="flex flex-col items-start">
             <div className="flex items-start">
               <motion.span
-                className="text-8xl md:text-9xl font-bold text-white tracking-tighter leading-none"
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-primary tracking-tighter leading-none"
                 key={current.temp}
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -91,7 +91,7 @@ const CurrentWeather: React.FC = () => {
               </motion.span>
               <motion.button
                 onClick={toggleUnit}
-                className="text-2xl md:text-3xl font-bold text-white/60 hover:text-white mt-4 transition-colors cursor-pointer"
+                className="text-xl sm:text-2xl md:text-3xl font-bold text-tertiary hover:text-primary mt-2 sm:mt-4 transition-colors cursor-pointer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label={`Switch to ${unit === 'celsius' ? 'Fahrenheit' : 'Celsius'}`}
@@ -100,7 +100,7 @@ const CurrentWeather: React.FC = () => {
               </motion.button>
             </div>
             <motion.p
-              className="text-white/60 text-lg md:text-xl font-light capitalize mt-1"
+              className="text-tertiary text-lg md:text-xl font-light capitalize mt-1"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -122,14 +122,14 @@ const CurrentWeather: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
         >
-          <span className="text-white/80 text-lg font-light">{weatherMood}</span>
+          <span className="text-secondary text-lg font-light">{weatherMood}</span>
         </motion.div>
       </motion.div>
 
       {/* Details Grid */}
       <motion.div
         variants={itemVariants}
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
       >
         {/* Feels Like */}
         <DetailCard
@@ -221,15 +221,15 @@ const DetailCard: React.FC<DetailCardProps> = ({ icon, label, value, subvalue, c
     className="glass rounded-2xl p-4 md:p-5 glass-hover group"
   >
     <div className="flex items-center gap-2 mb-3">
-      <span className={`text-lg ${color ? '' : 'text-white/40'} group-hover:text-accent-blue transition-colors`}
+      <span className={`text-lg ${color ? '' : 'text-muted'} group-hover:text-accent-blue transition-colors`}
         style={color ? { color } : undefined}>
         {icon}
       </span>
-      <span className="text-white/40 text-xs uppercase tracking-wider font-medium">{label}</span>
+      <span className="text-dim text-xs uppercase tracking-wider font-medium">{label}</span>
     </div>
-    <div className="text-white/90 text-xl md:text-2xl font-semibold">{value}</div>
+    <div className="text-secondary text-xl md:text-2xl font-semibold">{value}</div>
     {subvalue && (
-      <div className="text-white/30 text-xs mt-1">{subvalue}</div>
+      <div className="text-dim text-xs mt-1">{subvalue}</div>
     )}
   </motion.div>
 );

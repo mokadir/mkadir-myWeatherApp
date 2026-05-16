@@ -14,6 +14,7 @@ interface WeatherState {
   soundType: 'rain' | 'thunder' | 'wind' | 'none';
   showAlerts: boolean;
   dismissedAlerts: string[];
+  theme: 'dark' | 'light';
 }
 
 type WeatherAction =
@@ -28,7 +29,8 @@ type WeatherAction =
   | { type: 'TOGGLE_SOUND' }
   | { type: 'SET_SOUND_TYPE'; payload: 'rain' | 'thunder' | 'wind' | 'none' }
   | { type: 'DISMISS_ALERT'; payload: string }
-  | { type: 'TOGGLE_ALERTS' };
+  | { type: 'TOGGLE_ALERTS' }
+  | { type: 'SET_THEME'; payload: 'dark' | 'light' };
 
 const initialState: WeatherState = {
   weatherData: null,
@@ -42,6 +44,7 @@ const initialState: WeatherState = {
   soundType: 'none',
   showAlerts: true,
   dismissedAlerts: [],
+  theme: 'dark',
 };
 
 function weatherReducer(state: WeatherState, action: WeatherAction): WeatherState {
@@ -84,6 +87,9 @@ function weatherReducer(state: WeatherState, action: WeatherAction): WeatherStat
       };
     case 'TOGGLE_ALERTS':
       return { ...state, showAlerts: !state.showAlerts };
+    case 'SET_THEME':
+      localStorage.setItem('weatherTheme', action.payload);
+      return { ...state, theme: action.payload };
     default:
       return state;
   }
@@ -103,10 +109,12 @@ export const WeatherProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [state, dispatch] = useReducer(weatherReducer, initialState, () => {
     const savedFavorites = localStorage.getItem('weatherFavorites');
     const savedHistory = localStorage.getItem('weatherSearchHistory');
+    const savedTheme = localStorage.getItem('weatherTheme') as 'dark' | 'light' | null;
     return {
       ...initialState,
       favorites: savedFavorites ? JSON.parse(savedFavorites) : [],
       searchHistory: savedHistory ? JSON.parse(savedHistory) : [],
+      theme: savedTheme || 'dark',
     };
   });
 

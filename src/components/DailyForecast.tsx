@@ -28,7 +28,7 @@ const DailyForecast: React.FC = () => {
       {/* Header */}
       <div className="flex items-center gap-2 mb-6">
         <FiCalendar className="text-accent-purple/70" />
-        <h2 className="text-white/80 text-sm font-medium uppercase tracking-wider">7-Day Forecast</h2>
+        <h2 className="text-secondary text-sm font-medium uppercase tracking-wider">7-Day Forecast</h2>
       </div>
 
       {/* Daily items */}
@@ -50,11 +50,11 @@ const DailyForecast: React.FC = () => {
             >
               {/* Day name */}
               <div className="w-12 text-center">
-                <span className={`text-sm font-medium ${isToday ? 'text-accent-blue' : 'text-white/70'}`}>
+                <span className={`text-sm font-medium ${isToday ? 'text-accent-blue' : 'text-tertiary'}`}>
                   {isToday ? 'Today' : getDayFromTimestamp(day.dt)}
                 </span>
                 {!isToday && (
-                  <div className="text-[10px] text-white/30">{getDateFromTimestamp(day.dt)}</div>
+                  <div className="text-[10px] text-dim">{getDateFromTimestamp(day.dt)}</div>
                 )}
               </div>
 
@@ -69,20 +69,20 @@ const DailyForecast: React.FC = () => {
               </div>
 
               {/* Condition */}
-              <div className="w-20 hidden md:block">
-                <span className="text-white/50 text-xs capitalize">{day.description}</span>
+              <div className="w-20 hidden sm:block">
+                <span className="text-muted text-xs capitalize truncate block">{day.description}</span>
               </div>
 
               {/* Min temp */}
-              <div className="w-12 text-right">
-                <span className="text-white/40 text-sm">
+              <div className="w-10 sm:w-12 text-right">
+                <span className="text-muted text-xs sm:text-sm">
                   {formatTemperature(day.temp.min, unit)}
                 </span>
               </div>
 
               {/* Temperature bar */}
-              <div className="flex-1 px-3">
-                <div className="relative h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div className="flex-1 px-1 sm:px-3">
+                <div className="relative h-1 sm:h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <motion.div
                     className="absolute h-full rounded-full bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-orange"
                     initial={{ width: 0 }}
@@ -94,8 +94,8 @@ const DailyForecast: React.FC = () => {
               </div>
 
               {/* Max temp */}
-              <div className="w-12 text-left">
-                <span className="text-white/80 text-sm font-medium">
+              <div className="w-10 sm:w-12 text-left">
+                <span className="text-secondary text-xs sm:text-sm font-medium">
                   {formatTemperature(day.temp.max, unit)}
                 </span>
               </div>

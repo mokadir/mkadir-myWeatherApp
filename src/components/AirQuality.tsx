@@ -34,12 +34,12 @@ const AirQuality: React.FC = () => {
       {/* Header */}
       <div className="flex items-center gap-2 mb-6">
         <FiWind className="text-accent-cyan/70" />
-        <h2 className="text-white/80 text-sm font-medium uppercase tracking-wider">Air Quality</h2>
+        <h2 className="text-secondary text-sm font-medium uppercase tracking-wider">Air Quality</h2>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center gap-8">
+      <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-8">
         {/* Circular AQI Indicator */}
-        <div className="relative w-36 h-36">
+        <div className="relative w-28 h-28 sm:w-36 sm:h-36">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
             <circle
               cx="60"
@@ -73,7 +73,7 @@ const AirQuality: React.FC = () => {
             >
               {aqi}
             </motion.span>
-            <span className="text-white/40 text-xs uppercase mt-1">AQI</span>
+            <span className="text-dim text-xs uppercase mt-1">AQI</span>
           </div>
         </div>
 
@@ -89,21 +89,21 @@ const AirQuality: React.FC = () => {
             >
               {aqiInfo.label}
             </motion.span>
-            <p className="text-white/30 text-xs mt-1">Current Air Quality Index</p>
+            <p className="text-dim text-xs mt-1">Current Air Quality Index</p>
           </div>
 
           {/* Component grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-4 sm:grid-cols-4 gap-1.5 sm:gap-3">
             {Object.entries(components).slice(0, 8).map(([key, value], i) => (
               <motion.div
                 key={key}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + i * 0.05 }}
-                className="bg-white/5 rounded-xl p-3 text-center"
+                className="bg-white/5 rounded-xl p-2 sm:p-3 text-center"
               >
-                <div className="text-white/90 text-sm font-semibold">{value.toFixed(1)}</div>
-                <div className="text-white/30 text-xs">{componentLabels[key] || key}</div>
+                <div className="text-secondary text-xs sm:text-sm font-semibold">{value.toFixed(1)}</div>
+                <div className="text-dim text-[10px] sm:text-xs">{componentLabels[key] || key}</div>
               </motion.div>
             ))}
           </div>

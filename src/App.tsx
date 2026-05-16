@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WeatherProvider, useWeather } from './context/WeatherContext';
 import WeatherBackground from './components/WeatherBackground';
@@ -14,15 +14,21 @@ import SettingsPanel from './components/SettingsPanel';
 
 const WeatherDashboard: React.FC = () => {
   const { state } = useWeather();
-  const { loading, error, weatherData } = state;
+  const { loading, error, weatherData, theme } = state;
+
+  useEffect(() => {
+    // Apply theme to <html> element
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.classList.toggle('light', theme === 'light');
+  }, [theme]);
 
   return (
-    <div className="relative min-h-screen text-white">
+    <div className="relative min-h-screen text-white transition-colors duration-500">
       <WeatherBackground />
       <WeatherAlerts />
       <SettingsPanel />
 
-      <div className="relative z-10 container mx-auto px-4 py-6 md:py-8 lg:py-10">
+      <div className="relative z-10 container mx-auto px-3 sm:px-4 md:px-6 py-4 md:py-8 lg:py-10">
         {/* Header with Search */}
         <motion.header
           initial={{ opacity: 0, y: -20 }}
@@ -30,23 +36,23 @@ const WeatherDashboard: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <div className="flex items-center gap-2 sm:gap-3">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple 
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple 
                            flex items-center justify-center shadow-glow-blue"
               >
-                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                 </svg>
               </motion.div>
               <div>
-                <h1 className="text-white/90 text-xl font-bold tracking-tight">WeatherVault</h1>
-                <p className="text-white/30 text-xs">Premium Weather Intelligence</p>
+                <h1 className="text-white/90 dark:text-white/90 text-white/80 text-base sm:text-xl font-bold tracking-tight">WeatherVault</h1>
+                <p className="text-white/30 dark:text-white/30 text-white/50 text-[10px] sm:text-xs">Premium Weather Intelligence</p>
               </div>
             </div>
 
@@ -89,9 +95,9 @@ const WeatherDashboard: React.FC = () => {
             >
               <div className="glass rounded-3xl p-8 max-w-md mx-auto">
                 <div className="text-red-400 text-5xl mb-4">⚠</div>
-                <h2 className="text-white/80 text-xl font-semibold mb-2">Unable to Load Weather</h2>
-                <p className="text-white/40 text-sm mb-6">{error}</p>
-                <p className="text-white/30 text-xs">
+                <h2 className="text-secondary text-xl font-semibold mb-2">Unable to Load Weather</h2>
+                <p className="text-muted text-sm mb-6">{error}</p>
+                <p className="text-dim text-xs">
                   Make sure you have a valid OpenWeatherMap API key configured.
                   Check the console for more details.
                 </p>
@@ -124,9 +130,9 @@ const WeatherDashboard: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
-                className="text-center py-8"
+                className="text-center py-6 sm:py-8"
               >
-                <p className="text-white/20 text-xs">
+                <p className="text-faint text-[10px] sm:text-xs">
                   WeatherVault · Premium Weather Intelligence
                 </p>
               </motion.footer>
@@ -164,7 +170,7 @@ const SunriseSunsetCard: React.FC = () => {
       transition={{ delay: 0.5, duration: 0.6 }}
       className="glass rounded-3xl p-6"
     >
-      <h3 className="text-white/50 text-xs uppercase tracking-wider mb-4">Daylight</h3>
+      <h3 className="text-dim text-xs uppercase tracking-wider mb-4">Daylight</h3>
 
       <div className="relative mb-4">
         {/* Sun arc visualization */}
@@ -210,20 +216,20 @@ const SunriseSunsetCard: React.FC = () => {
 
       <div className="flex justify-between">
         <div>
-          <div className="text-white/30 text-xs">Sunrise</div>
-          <div className="text-white/80 text-sm font-medium">
+          <div className="text-dim text-xs">Sunrise</div>
+          <div className="text-secondary text-sm font-medium">
             {new Date(sunrise * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </div>
         </div>
         <div className="text-center">
-          <div className="text-white/30 text-xs">Daylight</div>
-          <div className="text-white/80 text-sm font-medium">
+          <div className="text-dim text-xs">Daylight</div>
+          <div className="text-secondary text-sm font-medium">
             {Math.floor(dayLength / 3600)}h {Math.floor((dayLength % 3600) / 60)}m
           </div>
         </div>
         <div className="text-right">
-          <div className="text-white/30 text-xs">Sunset</div>
-          <div className="text-white/80 text-sm font-medium">
+          <div className="text-dim text-xs">Sunset</div>
+          <div className="text-secondary text-sm font-medium">
             {new Date(sunset * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </div>
         </div>

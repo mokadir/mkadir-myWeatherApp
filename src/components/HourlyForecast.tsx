@@ -59,7 +59,7 @@ const HourlyForecast: React.FC = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <FiClock className="text-accent-blue/70" />
-          <h2 className="text-white/80 text-sm font-medium uppercase tracking-wider">Hourly Forecast</h2>
+          <h2 className="text-secondary text-sm font-medium uppercase tracking-wider">Hourly Forecast</h2>
         </div>
         <div className="flex gap-2">
           <button
@@ -88,8 +88,8 @@ const HourlyForecast: React.FC = () => {
       {/* Scrollable hourly cards with temperature graph */}
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto scrollbar-hide pb-2"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="flex gap-2 sm:gap-3 overflow-x-auto overflow-y-hidden scrollbar-hide pb-2 touch-pan-x"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {hourly.map((hour, index) => {
           const isNow = index === 0;
@@ -106,29 +106,29 @@ const HourlyForecast: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.03, duration: 0.4 }}
               whileHover={{ y: -4, scale: 1.03 }}
-              className={`flex flex-col items-center min-w-[80px] p-4 rounded-2xl transition-all duration-300 cursor-pointer
+              className={`flex flex-col items-center min-w-[70px] sm:min-w-[80px] p-3 sm:p-4 rounded-2xl transition-all duration-300 cursor-pointer
                 ${isNow
                   ? 'bg-accent-blue/20 border border-accent-blue/30 shadow-glow-blue'
                   : 'bg-white/5 border border-white/5 hover:bg-white/10'
                 }`}
             >
               {/* Time label */}
-              <span className={`text-xs font-medium mb-2 ${isNow ? 'text-accent-blue' : 'text-white/50'}`}>
+              <span className={`text-[10px] sm:text-xs font-medium mb-1 sm:mb-2 ${isNow ? 'text-accent-blue' : 'text-dim'}`}>
                 {hourLabel}
               </span>
 
               {/* Icon */}
-              <div className="relative mb-2">
+              <div className="relative mb-1 sm:mb-2">
                 <img
                   src={iconUrl}
                   alt={hour.condition}
-                  className="w-10 h-10 drop-shadow-lg"
+                  className="w-8 h-8 sm:w-10 sm:h-10 drop-shadow-lg"
                   style={{ filter: 'brightness(1.1)' }}
                 />
               </div>
 
               {/* Temperature */}
-              <span className={`text-lg font-bold ${isNow ? 'text-white' : 'text-white/80'}`}>
+              <span className={`text-base sm:text-lg font-bold ${isNow ? 'text-primary' : 'text-secondary'}`}>
                 {formatTemperature(hour.temp, unit)}
               </span>
 

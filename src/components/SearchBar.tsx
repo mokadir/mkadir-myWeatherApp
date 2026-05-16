@@ -73,11 +73,11 @@ const SearchBar: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto">
-      <div className="relative flex items-center">
+    <div className="relative w-full">
+      <div className="relative flex items-center gap-2 sm:gap-3">
         {/* Search Input */}
         <div className="relative flex-1">
-          <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 text-lg" />
+          <FiSearch className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/40 text-base sm:text-lg" />
           <input
             ref={inputRef}
             type="text"
@@ -85,17 +85,17 @@ const SearchBar: React.FC = () => {
             onChange={handleInputChange}
             onFocus={() => query.length >= 2 && setIsOpen(true)}
             placeholder="Search city..."
-            className="w-full pl-12 pr-12 py-4 bg-white/10 backdrop-blur-xl border border-white/10 
-                       rounded-2xl text-white placeholder-white/40 font-light
+            className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4 bg-white/10 backdrop-blur-xl border border-white/10 
+                       rounded-xl sm:rounded-2xl text-white placeholder-white/40 font-light
                        focus:outline-none focus:border-accent-blue/50 focus:bg-white/15
-                       transition-all duration-300 text-base"
+                       transition-all duration-300 text-sm sm:text-base"
             aria-label="Search for a city"
             autoComplete="off"
           />
           {query && (
             <button
               onClick={() => { setQuery(''); setResults([]); }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
+              className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 transition-colors"
               aria-label="Clear search"
             >
               <FiX />
@@ -108,12 +108,12 @@ const SearchBar: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleGeolocation}
-          className="ml-3 p-4 bg-white/10 backdrop-blur-xl border border-white/10 rounded-2xl
+          className="p-3 sm:p-4 bg-white/10 backdrop-blur-xl border border-white/10 rounded-xl sm:rounded-2xl
                      text-white/70 hover:text-accent-blue hover:border-accent-blue/50
-                     transition-all duration-300"
+                     transition-all duration-300 shrink-0"
           aria-label="Use current location"
         >
-          <FiNavigation className="text-lg" />
+          <FiNavigation className="text-base sm:text-lg" />
         </motion.button>
       </div>
 
@@ -125,8 +125,7 @@ const SearchBar: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full mt-2 left-0 right-[76px] z-50"
-          >
+                        className="absolute top-full mt-2 left-0 right-0 sm:right-[76px] z-50">
             <div className="bg-gray-900/95 backdrop-blur-2xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
               {/* Search results */}
               {isSearching ? (

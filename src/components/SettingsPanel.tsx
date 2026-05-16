@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiVolume2, FiVolumeX, FiCloudRain, FiWind, FiZap, FiSettings, FiStar, FiX, FiBell, FiBellOff } from 'react-icons/fi';
+import { FiVolume2, FiVolumeX, FiCloudRain, FiWind, FiZap, FiSettings, FiStar, FiX, FiBell, FiBellOff, FiSun, FiMoon } from 'react-icons/fi';
 import { useWeather } from '../context/WeatherContext';
 
 const SettingsPanel: React.FC = () => {
@@ -20,12 +20,12 @@ const SettingsPanel: React.FC = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-40 p-3 bg-white/10 backdrop-blur-xl border border-white/10 
+        className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-40 p-2.5 sm:p-3 bg-white/10 backdrop-blur-xl border border-white/10 
                    rounded-full text-white/60 hover:text-accent-blue hover:border-accent-blue/50
                    transition-all duration-300 shadow-lg"
         aria-label="Toggle settings"
       >
-        <FiSettings className="w-5 h-5" />
+        <FiSettings className="w-4 h-4 sm:w-5 sm:h-5" />
       </motion.button>
 
       {/* Settings Panel */}
@@ -45,10 +45,9 @@ const SettingsPanel: React.FC = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 100, scale: 0.9 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              className="fixed bottom-24 right-6 z-50 w-72 glass-strong rounded-2xl p-5 shadow-2xl"
-            >
+                            className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 w-[calc(100%-2rem)] sm:w-72 glass-strong rounded-2xl p-4 sm:p-5 shadow-2xl max-h-[70vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-white/80 text-sm font-medium">Settings</h3>
+                <h3 className="text-secondary text-sm font-medium">Settings</h3>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="text-white/30 hover:text-white/70 transition-colors"
@@ -60,7 +59,7 @@ const SettingsPanel: React.FC = () => {
               {/* Sound Settings */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-white/50 text-xs uppercase tracking-wider">Sound Ambience</span>
+                  <span className="text-dim text-xs uppercase tracking-wider">Sound Ambience</span>
                   <button
                     onClick={() => dispatch({ type: 'TOGGLE_SOUND' })}
                     className={`p-1.5 rounded-lg transition-colors ${state.soundEnabled ? 'text-accent-blue bg-accent-blue/10' : 'text-white/30 hover:text-white/60'}`}
@@ -91,13 +90,27 @@ const SettingsPanel: React.FC = () => {
 
                 <div className="border-t border-white/5 pt-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-white/50 text-xs uppercase tracking-wider">Weather Alerts</span>
+                    <span className="text-dim text-xs uppercase tracking-wider">Weather Alerts</span>
                     <button
                       onClick={() => dispatch({ type: 'TOGGLE_ALERTS' })}
                       className={`p-1.5 rounded-lg transition-colors ${state.showAlerts ? 'text-accent-cyan bg-accent-cyan/10' : 'text-white/30 hover:text-white/60'}`}
                       aria-label="Toggle alerts"
                     >
                       {state.showAlerts ? <FiBell className="w-4 h-4" /> : <FiBellOff className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Theme Toggle */}
+                <div className="border-t border-white/5 pt-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-dim text-xs uppercase tracking-wider">Theme</span>
+                    <button
+                      onClick={() => dispatch({ type: 'SET_THEME', payload: state.theme === 'dark' ? 'light' : 'dark' })}
+                      className={`p-1.5 rounded-lg transition-colors ${state.theme === 'light' ? 'text-accent-yellow bg-accent-yellow/10' : 'text-accent-blue bg-accent-blue/10'}`}
+                      aria-label={`Switch to ${state.theme === 'dark' ? 'light' : 'dark'} mode`}
+                    >
+                      {state.theme === 'dark' ? <FiSun className="w-4 h-4" /> : <FiMoon className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
@@ -121,7 +134,7 @@ const SettingsPanel: React.FC = () => {
                       className="w-full flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 rounded-xl transition-colors"
                     >
                       <FiStar className="text-accent-yellow/50" />
-                      <span className="text-white/60 text-sm">Save current city</span>
+                      <span className="text-tertiary text-sm">Save current city</span>
                     </button>
                   </div>
                 )}

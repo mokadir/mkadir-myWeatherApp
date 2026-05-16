@@ -23,7 +23,7 @@ const WeatherAlerts: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-50 max-w-sm w-full space-y-2">
+    <div className="fixed top-4 right-2 sm:right-4 z-50 max-w-sm w-[calc(100%-1rem)] sm:w-full space-y-2">
       <AnimatePresence>
         {activeAlerts.map((alert) => {
           const colors = severityColors[alert.severity] || severityColors.moderate;
@@ -50,8 +50,8 @@ const WeatherAlerts: React.FC = () => {
                       <FiX className="w-4 h-4" />
                     </button>
                   </div>
-                  <p className="text-white/60 text-xs mt-1 line-clamp-2">{alert.description}</p>
-                  <p className="text-white/30 text-[10px] mt-1">
+                  <p className="text-tertiary text-xs mt-1 line-clamp-2">{alert.description}</p>
+                  <p className="text-dim text-[10px] mt-1">
                     {new Date(alert.start * 1000).toLocaleTimeString()} - {new Date(alert.end * 1000).toLocaleTimeString()}
                   </p>
                 </div>

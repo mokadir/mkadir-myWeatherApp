@@ -17,10 +17,10 @@ const FavoritesSection: React.FC = () => {
     >
       <div className="flex items-center gap-2 mb-4">
         <FiStar className="text-accent-yellow/70" />
-        <h2 className="text-white/80 text-sm font-medium uppercase tracking-wider">Favorite Cities</h2>
+        <h2 className="text-secondary text-sm font-medium uppercase tracking-wider">Favorite Cities</h2>
       </div>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2 sm:gap-3">
         {state.favorites.map((fav, i) => (
           <motion.div
             key={`${fav.lat}-${fav.lon}`}
@@ -31,11 +31,11 @@ const FavoritesSection: React.FC = () => {
           >
             <button
               onClick={() => fetchWeather(fav.lat, fav.lon, fav.name)}
-              className="px-4 py-2 bg-white/10 hover:bg-white/15 border border-white/10 rounded-xl
-                         text-white/70 hover:text-white text-sm transition-all duration-300 flex items-center gap-2"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 hover:bg-white/15 border border-white/10 rounded-xl
+                         text-white/70 hover:text-white text-xs sm:text-sm transition-all duration-300 flex items-center gap-1.5 sm:gap-2"
             >
-              <FiStar className="text-accent-yellow/50 group-hover:text-accent-yellow transition-colors" />
-              <span>{fav.name}, {fav.country}</span>
+              <FiStar className="text-accent-yellow/50 group-hover:text-accent-yellow transition-colors shrink-0 w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <span className="truncate max-w-[120px] sm:max-w-none">{fav.name}, {fav.country}</span>
             </button>
             <button
               onClick={() => dispatch({ type: 'REMOVE_FAVORITE', payload: `${fav.lat}-${fav.lon}` })}
