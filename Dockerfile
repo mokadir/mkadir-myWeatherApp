@@ -107,15 +107,9 @@ server {
 NGINX_CONF
 EOF
 
-# Create a non-root user for running nginx
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup && \
-    chown -R appuser:appgroup /usr/share/nginx/html && \
-    chown -R appuser:appgroup /var/cache/nginx && \
-    chown -R appuser:appgroup /var/log/nginx && \
-    touch /var/run/nginx.pid && \
-    chown -R appuser:appgroup /var/run/nginx.pid
-
-USER appuser
+# Use the default nginx user (already exists in the image, can bind to port 80)
+# The nginx image already sets up its own user with proper capabilities
+USER nginx
 
 EXPOSE 80
 
