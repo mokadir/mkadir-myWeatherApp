@@ -72,6 +72,10 @@ spec:
                      defaultValue: false,
                      description: 'Fail build on vulnerabilities')
 
+        string(name: 'OPENWEATHER_API_KEY',
+               defaultValue: '',
+               description: 'OpenWeatherMap API key (or leave empty to skip build-arg)')
+
         string(name: 'SLACK_CHANNEL',
                defaultValue: '',
                description: 'Optional Slack channel for notifications')
@@ -262,12 +266,9 @@ EOF
                         kanikoCommand += " --label com.${env.APP_NAME}.environment=${env.BUILD_ENV}"
                         kanikoCommand += " --snapshot-mode=redo --use-new-run --cache=false"
 
-                        // Build arg for API key (client-side key, not a server secret)
-                        withCredentials([string(
-                            credentialsId: 'openweathermap-api-key',
-                            variable: 'OWM_API_KEY'
-                        )]) {
-                            kanikoCommand += " --build-arg REACT_APP_OPENWEATHER_API_KEY=${OWM_API_KEY}"
+                        // Build arg for API key (passed as pipeline parameter)
+                        if (params.OPENWEATHER_API_KEY?.trim()) {
+                            kanikoCommand += " --build-arg REACT_APP_OPENWEATHER_API_KEY=${params.OPENWEATHER_API_KEY}"
                         }
 
                         if (!params.PUSH_IMAGE) {
