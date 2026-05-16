@@ -1,7 +1,32 @@
 import { WeatherData, CurrentWeather, HourlyForecast, DailyForecast, WeatherAlert, AirQuality, CitySearchResult } from '../types';
 
-// Get API key from environment variable or use placeholder
-const API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY || 'YOUR_OPENWEATHERMAP_API_KEY';
+// =========================================================================
+// Runtime configuration — reads API key from window.__ENV__
+// which is populated by env-config.js at page load from /config.json
+// (mounted from K8s Secret). Falls back to build-time env var, then placeholder.
+// =========================================================================
+declare global {
+  interface Window {
+    __ENV__?: {
+      REACT_APP_OPENWEATHER_API_KEY?: string;
+    };
+  }
+}
+
+function getApiKey(): string {
+  // Priority 1: Runtime config from K8s Secret (env-config.js → /config.json)
+  if (typeof window !== 'undefined' && window.__ENV__?.REACT_APP_OPENWEATHER_API_KEY) {
+    return window.__ENV__.REACT_APP_OPENWEATHER_API_KEY;
+  }
+  // Priority 2: Build-time env var (CRA's process.env — injected at build time)
+  if (process.env.REACT_APP_OPENWEATHER_API_KEY) {
+    return process.env.REACT_APP_OPENWEATHER_API_KEY;
+  }
+  // Priority 3: Placeholder (will show API error)
+  return 'YOUR_OPENWEATHERMAP_API_KEY';
+}
+
+const API_KEY = getApiKey();
 const BASE_URL = 'https://api.openweathermap.org';
 
 class WeatherService {
