@@ -31,6 +31,9 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy built assets from builder stage
 COPY --from=builder /app/build /usr/share/nginx/html
 
+# Remove default nginx config and use only ours
+RUN rm -f /etc/nginx/conf.d/default.conf
+
 # Custom nginx configuration for SPA routing + security
 RUN <<EOF
 cat > /etc/nginx/conf.d/default.conf << 'NGINX_CONF'
@@ -107,9 +110,11 @@ server {
 NGINX_CONF
 EOF
 
-# Use the default nginx user (already exists in the image, can bind to port 80)
-# The nginx image already sets up its own user with proper capabilities
-USER nginx
+# Run as root (default nginx image behavior)
+# Master process runs as root to bind port 80,
+# worker processes drop to 'nginx' user automatically
+# via the 'user nginx;' directive in the default nginx.conf
+# USER root
 
 EXPOSE 80
 
