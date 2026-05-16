@@ -10,7 +10,7 @@ spec:
     app: weathervault
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 80
       nodePort: 30016
   type: NodePort
