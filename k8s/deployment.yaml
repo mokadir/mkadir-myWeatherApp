@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: weathervault-container
-          image: mokadir/weathervault:7
+          image: mokadir/weathervault:8
           ports:
             - containerPort: 80
           resources:
