@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: weathervault-container
-          image: mokadir/weathervault:10
+          image: mokadir/weathervault:11
           ports:
             - containerPort: 80
           resources:
@@ -32,6 +32,11 @@ spec:
           env:
             - name: APP_ENV
               value: "production"
+          volumeMounts:
+            - name: weathervault-config
+              mountPath: /usr/share/nginx/html/config.json
+              subPath: api-key
+              readOnly: true
           livenessProbe:
             httpGet:
               path: /
@@ -44,3 +49,7 @@ spec:
               port: 80
             initialDelaySeconds: 5
             periodSeconds: 10
+      volumes:
+        - name: weathervault-config
+          secret:
+            secretName: weathervault-secrets
