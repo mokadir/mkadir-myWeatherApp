@@ -72,10 +72,6 @@ spec:
                      defaultValue: false,
                      description: 'Fail build on vulnerabilities')
 
-        //string(name: 'OPENWEATHER_API_KEY',
-        //       defaultValue: '',
-        //       description: 'OpenWeatherMap API key (or leave empty to skip build-arg)')
-
         string(name: 'SLACK_CHANNEL',
                defaultValue: '',
                description: 'Optional Slack channel for notifications')
@@ -272,10 +268,8 @@ EOF
 
 
 
-                        // Build arg for API key (passed as pipeline parameter)
-                        //if (params.OPENWEATHER_API_KEY?.trim()) {
-                        //    kanikoCommand += " --build-arg REACT_APP_OPENWEATHER_API_KEY=${params.OPENWEATHER_API_KEY}"
-                        //}
+                        // No build-time ARG needed — API key is loaded at runtime
+                        // from the K8s Secret mounted as /usr/share/nginx/html/config.json
 
                         if (!params.PUSH_IMAGE) {
                             kanikoCommand += ' --no-push'

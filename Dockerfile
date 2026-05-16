@@ -14,10 +14,7 @@ COPY tsconfig.json tailwind.config.js postcss.config.js ./
 COPY public/ public/
 COPY src/ src/
 
-# Build with environment variable injection at runtime
-ARG REACT_APP_OPENWEATHER_API_KEY
-ENV REACT_APP_OPENWEATHER_API_KEY=$REACT_APP_OPENWEATHER_API_KEY
-
+# Build (API key injected at runtime via ConfigMap — see k8s/deployment.yaml)
 RUN npm run build
 
 # ================================================================
@@ -92,6 +89,20 @@ server {
         location ~* \.html?$ {
             expires 5m;
             add_header Cache-Control "public, must-revalidate";
+        }
+
+        # Never cache runtime config — loaded fresh each time
+        location = /config.json {
+            expires -1;
+            add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate";
+            add_header Pragma "no-cache";
+        }
+
+        # Never cache the env config loader
+        location = /env-config.js {
+            expires -1;
+            add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate";
+            add_header Pragma "no-cache";
         }
     }
 
