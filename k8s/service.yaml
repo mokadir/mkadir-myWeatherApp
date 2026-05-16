@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ns-weatherapp
+  name: weathervault-service
+  labels:
+    app: weathervault
+spec:
+  selector:
+    app: weathervault
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30016
+  type: NodePort
