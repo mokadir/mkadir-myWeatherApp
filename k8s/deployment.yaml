@@ -21,7 +21,7 @@ spec:
         - name: dockerhub-cred
       containers:
         - name: weathervault-container
-          image: mokadir/weathervault:4
+          image: mokadir/weathervault:5
           ports:
             - containerPort: 80
           resources:
